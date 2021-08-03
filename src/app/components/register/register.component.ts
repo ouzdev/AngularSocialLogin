@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     surname: ['', Validators.required],
     email: ['', Validators.required],
       password: ['', [Validators.required]],
-      passwordConfirm: ['', [Validators.required]]
+      passwordConfirm: ['', [Validators.required]] 
     });
   
   signInWithGoogle(): void {
