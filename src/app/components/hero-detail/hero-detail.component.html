@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Angular JWT & Social Login</span>
+        <span class="example-spacer"></span>
+        <button mat-mini-fab color="warn" (click)="signOut()" color="warn" aria-label="Example icon button with a home icon">
+            <mat-icon>power_settings_new</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image" style="background-image: url('{{user?.photoUrl}}');"></div>
+        <mat-card-title>{{user?.firstName}} {{user?.lastName}}</mat-card-title>
+        <mat-card-subtitle>{{user?.email}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{user?.photoUrl}}" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item>ID: {{user?.id}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Ad ve Soyad: {{user?.firstName}} {{user?.lastName}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>E-Posta: {{user?.email}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Provider: {{user?.provider}}</mat-list-item>            
+          </mat-list>
+    </mat-card-content>
+</mat-card>

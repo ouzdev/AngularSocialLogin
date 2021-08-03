@@ -1,0 +1,20 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    
+    background-size: cover;
+  }
+  md-grid-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  mat-grid-tile {
+    background: lightblue;
+  }
