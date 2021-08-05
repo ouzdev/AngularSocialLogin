@@ -9,14 +9,11 @@ import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUs
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  @Output() responseData: EventEmitter<any> = new EventEmitter();
 
   user: SocialUser | null;
   constructor(private authService: SocialAuthService, private formBuilder: FormBuilder, private router: Router) {
     this.user = null;
-    router.getCurrentNavigation()?.extras.state
-    console.log(history.state)
-  }
+   }
 
   loginForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -44,7 +41,25 @@ export class RegisterComponent implements OnInit {
   login(){
     this.router.navigate(['/'])
   }
-  ngOnInit(): void {
+  registerSocial(){
+    
   }
+
+  ngOnInit(): void {
+     this.user =JSON.parse(sessionStorage.getItem('registerUser') || '{}');
+
+   if(this.user?.response!=undefined){
+    this.loginForm.patchValue({name: this.user?.firstName})
+    this.loginForm.controls['name'].disable();
+    this.loginForm.patchValue({surname: this.user?.lastName})
+    this.loginForm.controls['surname'].disable();
+    this.loginForm.patchValue({email: this.user?.email})
+    this.loginForm.controls['email'].disable();
+   }
+   
+  
+  };
+    
+
 
 }

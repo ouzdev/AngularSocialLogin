@@ -1,99 +1,120 @@
 <div class="limiter">
-    <div class="container-login100">
-      <div class="wrap-login100">
-        <form class="login100-form" [formGroup]="loginForm" #ngForm="ngForm">
-          <span class="login100-form-title p-b-43">
-            Kayıt Ol
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <form class="login100-form" [formGroup]="loginForm" #ngForm="ngForm">
+        <span class="login100-form-title p-b-20">
+          Kayıt Ol
+        </span>
+        <div *ngIf="user?.response!=undefined" class="text-center p-t-46 p-b-20">
+          <span class="txt2" style="color: red;">
+            Sosyal medya hesabıyla giriş yapmak için şifrenizi oluşturunuz.
           </span>
-  
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Adınız</mat-label>
-            <input  type="text" formControlName="name" matInput>
-            <mat-hint style="color: red;" *ngIf="loginForm.get('name')?.touched &&  loginForm.get('name')?.errors?.required">
-              Adınız Gereklidir
-            </mat-hint>
-          </mat-form-field>
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Soyadınız</mat-label>
-            <input  type="email" formControlName="surname" matInput>
-            <mat-hint style="color: red;" *ngIf="loginForm.get('surname')?.touched &&  loginForm.get('surname')?.errors?.required">
-              Soyadınız Gereklidir
-            </mat-hint>
-          </mat-form-field>
-  
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>E-Posta Adresi</mat-label>
-            <input  type="email" formControlName="email" matInput>
-            <mat-hint style="color: red;" *ngIf="loginForm.get('email')?.touched &&  loginForm.get('email')?.errors?.required">
-              E-Mail Adresi Gereklidir
-            </mat-hint>
-          </mat-form-field>
-  
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Şifre</mat-label>
-            <input matInput type="password" formControlName="password">
-            <mat-hint style="color: red;" *ngIf="loginForm.get('password')?.touched &&  loginForm.get('password')?.errors?.required">
-              Şifre Gereklidir
-            </mat-hint>
-          </mat-form-field>
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Şifre (Tekrar)</mat-label>
-            <input matInput type="password" formControlName="password">
-            <mat-hint style="color: red;" *ngIf="loginForm.get('password')?.touched &&  loginForm.get('password')?.errors?.required">
-              Şifre Gereklidir
-            </mat-hint>
-          </mat-form-field>
-        
-  
-          <div class="flex-sb-m w-full p-t-3 p-b-32">
-            
-  
-            <div>
-              <a (click)="login()" class="txt1">
-                Zaten bir hesabınız var mı ?
-              </a>
-            </div>
+        </div>
+
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Adınız</mat-label>
+          <input type="text" formControlName="name" matInput>
+          <mat-hint style="color: red;"
+            *ngIf="loginForm.get('name')?.touched &&  loginForm.get('name')?.errors?.required">
+            Adınız Gereklidir
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Soyadınız</mat-label>
+          <input type="email" formControlName="surname" matInput>
+          <mat-hint style="color: red;"
+            *ngIf="loginForm.get('surname')?.touched &&  loginForm.get('surname')?.errors?.required">
+            Soyadınız Gereklidir
+          </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>E-Posta Adresi</mat-label>
+          <input type="email" formControlName="email" matInput>
+          <mat-hint style="color: red;"
+            *ngIf="loginForm.get('email')?.touched &&  loginForm.get('email')?.errors?.required">
+            E-Mail Adresi Gereklidir
+          </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Şifre</mat-label>
+          <input matInput type="password" formControlName="password">
+          <mat-hint style="color: red;"
+            *ngIf="loginForm.get('password')?.touched &&  loginForm.get('password')?.errors?.required">
+            Şifre Gereklidir
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Şifre (Tekrar)</mat-label>
+          <input matInput type="password" formControlName="password">
+          <mat-hint style="color: red;"
+            *ngIf="loginForm.get('password')?.touched &&  loginForm.get('password')?.errors?.required">
+            Şifre Gereklidir
+          </mat-hint>
+        </mat-form-field>
+
+
+        <div class="flex-sb-m w-full p-t-3 p-b-32">
+
+
+          <div>
+            <a (click)="login()" class="txt1">
+              Zaten bir hesabınız var mı ?
+            </a>
           </div>
-  
-  
-   
-          <div class="container-login100-form-btn">
-            <button class="login100-form-btn" (click)="register()"> 
+        </div>
+
+
+
+        <div class="container-login100-form-btn">
+          <ng-container *ngIf="user?.response!=undefined; then socialRegister; else register ">
+          </ng-container>
+          <ng-template #register>
+            <button class="login100-form-btn">
               Kayıt Ol
             </button>
-          </div>
-  
-          <div class="text-center p-t-46 p-b-20">
-            <span class="txt2">
-              veya sosyal medya hesaplarıyla kayıt ol
-            </span>
-          </div>
-  
-          <div class="login100-form-social flex-c-m">
-            <a (click)="signInWithGoogle()" class="login100-form-social-item flex-c-m bg3 m-r-5">
-              <i class="fab fa-google" aria-hidden="true"></i> 
-            </a>
-            <a (click)="signInWithFacebook()" class="login100-form-social-item flex-c-m bg1 m-r-5">
-              <i class="fab fa-facebook" aria-hidden="true"></i> 
-            </a>
-  
-            <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
-              <i class="fab fa-twitter" aria-hidden="true"></i> 
-            </a>
-            <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
-              <i class="fab fa-amazon" aria-hidden="true"></i> 
-            </a>
-            <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
-              <i class="fab fa-microsoft" aria-hidden="true"></i> 
-            </a>
-            <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
-              <i class="fab fa-vk" aria-hidden="true"></i> 
-            </a>
-          </div>
-        </form>
-  
-        <div class="login100-more" style="background-image: url('../assets/images/bg-01.jpg');">
+          </ng-template>
+          <ng-template #socialRegister>
+            <button class="login100-form-btn" (click)="registerSocial()">
+              Şifreyi Kaydet
+            </button>
+          </ng-template>
+
+
         </div>
+
+        <div class="text-center p-t-46 p-b-20">
+          <span class="txt2">
+            veya sosyal medya hesaplarıyla kayıt ol
+          </span>
+        </div>
+
+        <div class="login100-form-social flex-c-m">
+          <a (click)="signInWithGoogle()" class="login100-form-social-item flex-c-m bg3 m-r-5">
+            <i class="fab fa-google" aria-hidden="true"></i>
+          </a>
+          <a (click)="signInWithFacebook()" class="login100-form-social-item flex-c-m bg1 m-r-5">
+            <i class="fab fa-facebook" aria-hidden="true"></i>
+          </a>
+
+          <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+            <i class="fab fa-twitter" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+            <i class="fab fa-amazon" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+            <i class="fab fa-microsoft" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+            <i class="fab fa-vk" aria-hidden="true"></i>
+          </a>
+        </div>
+      </form>
+
+      <div class="login100-more" style="background-image: url('../assets/images/bg-01.jpg');">
       </div>
     </div>
   </div>
+</div>
