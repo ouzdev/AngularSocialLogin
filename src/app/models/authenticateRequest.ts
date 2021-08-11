@@ -1,3 +1,4 @@
 export interface AuthenticateRequest{
-    idToken:string
+    idToken:string;
+    provider:string
 }

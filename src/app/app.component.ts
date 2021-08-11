@@ -12,20 +12,7 @@ export class AppComponent {
   title = 'AngularSocialLoginExample';
   constructor(private authService: SocialAuthService) 
   { 
-	this.user = null;
-	this.authService.authState.subscribe((user: SocialUser) => {
-	  console.log(user);
-	  this.user = user;
-	});
-  }
+
+	}
   
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => console.log(x));
-  }
-  signInWithFacebook(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((x: any) => console.log(x));
-  }
-  signOut(): void {
-    this.authService.signOut();
-  }  
 }

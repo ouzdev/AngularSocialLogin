@@ -1,7 +1,7 @@
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100">
-      <form class="login100-form" [formGroup]="loginForm" #ngForm="ngForm">
+      <form class="login100-form" [formGroup]="registerForm" #ngForm="ngForm">
         <span class="login100-form-title p-b-20">
           Kayıt Ol
         </span>
@@ -15,7 +15,7 @@
           <mat-label>Adınız</mat-label>
           <input type="text" formControlName="name" matInput>
           <mat-hint style="color: red;"
-            *ngIf="loginForm.get('name')?.touched &&  loginForm.get('name')?.errors?.required">
+            *ngIf="registerForm.get('name')?.touched &&  registerForm.get('name')?.errors?.required">
             Adınız Gereklidir
           </mat-hint>
         </mat-form-field>
@@ -23,7 +23,7 @@
           <mat-label>Soyadınız</mat-label>
           <input type="email" formControlName="surname" matInput>
           <mat-hint style="color: red;"
-            *ngIf="loginForm.get('surname')?.touched &&  loginForm.get('surname')?.errors?.required">
+            *ngIf="registerForm.get('surname')?.touched &&  registerForm.get('surname')?.errors?.required">
             Soyadınız Gereklidir
           </mat-hint>
         </mat-form-field>
@@ -32,7 +32,7 @@
           <mat-label>E-Posta Adresi</mat-label>
           <input type="email" formControlName="email" matInput>
           <mat-hint style="color: red;"
-            *ngIf="loginForm.get('email')?.touched &&  loginForm.get('email')?.errors?.required">
+            *ngIf="registerForm.get('email')?.touched &&  registerForm.get('email')?.errors?.required">
             E-Mail Adresi Gereklidir
           </mat-hint>
         </mat-form-field>
@@ -41,15 +41,15 @@
           <mat-label>Şifre</mat-label>
           <input matInput type="password" formControlName="password">
           <mat-hint style="color: red;"
-            *ngIf="loginForm.get('password')?.touched &&  loginForm.get('password')?.errors?.required">
+            *ngIf="registerForm.get('password')?.touched &&  registerForm.get('password')?.errors?.required">
             Şifre Gereklidir
           </mat-hint>
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Şifre (Tekrar)</mat-label>
-          <input matInput type="password" formControlName="password">
+          <input matInput type="password" formControlName="confirmPassword">
           <mat-hint style="color: red;"
-            *ngIf="loginForm.get('password')?.touched &&  loginForm.get('password')?.errors?.required">
+            *ngIf="registerForm.get('confirmPassword')?.touched &&  registerForm.get('confirmPassword')?.errors?.required">
             Şifre Gereklidir
           </mat-hint>
         </mat-form-field>
@@ -113,7 +113,7 @@
         </div>
       </form>
 
-      <div class="login100-more" style="background-image: url('../assets/images/bg-01.jpg');">
+      <div class="login100-more" style="background-image: url('../assets/images/bg-01.png');">
       </div>
     </div>
   </div>
