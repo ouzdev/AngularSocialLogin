@@ -33,7 +33,8 @@
               "./node_modules/@fortawesome/fontawesome-free/css/brands.css",
               "./node_modules/@fortawesome/fontawesome-free/css/solid.css",
               "./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
-              "./node_modules/animate.css/animate.css"
+              "./node_modules/animate.css/animate.css",
+              "./node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",

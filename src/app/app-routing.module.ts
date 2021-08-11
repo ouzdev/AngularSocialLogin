@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { LoginGuard } from './guards/authorize-guard.service';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
   },
   {
     path:'user',
-    component:HeroDetailComponent
+    component:HeroDetailComponent,
+    canActivate:[LoginGuard]
   },
   {
     path:'register',

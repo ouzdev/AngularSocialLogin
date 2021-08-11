@@ -4,10 +4,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { AuthenticateRequest } from 'src/app/models/authenticateRequest';
-import { LoginUser } from 'src/app/models/loginUser';
-import { User } from 'src/app/models/user';
+import { LoginModel} from 'src/app/models/loginModel';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -22,10 +22,10 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   user: SocialUser | null;
   loading = false;
-  loginUser= new LoginUser();
+  loginModel= new LoginModel();
 
 idToken:AuthenticateRequest |null;
-  constructor(private authService: SocialAuthService, private formBuilder: FormBuilder, private router: Router, private authWebService:AuthService,private userService:UserService) {
+  constructor(private authService: SocialAuthService, private formBuilder: FormBuilder, private router: Router, private authWebService:AuthService,private toastr:ToastrService) {
     this.user = null;
     this.idToken = null;
     this.authService.authState.subscribe((user: SocialUser) => {
@@ -39,35 +39,35 @@ idToken:AuthenticateRequest |null;
     password: ['', Validators.required]
   });
 
-  //Google İle Giriş Metodu
-  signInWithGoogle(): void {
+//   //Google İle Giriş Metodu
+   signInWithGoogle(): void {}
 
-    Swal.fire('Giriş Yapılıyor...')
-Swal.showLoading()
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: AuthenticateRequest) => 
+//     Swal.fire('Giriş Yapılıyor...')
+// Swal.showLoading()
+//     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: AuthenticateRequest) => 
 
-    this.authWebService.loginWebService(x).subscribe((response)=>{
+//     this.authWebService.loginWebService(x).subscribe((response)=>{
 
-    if(!response.success){
-      console.log(response)
+//     if(!response.success){
+//       console.log(response)
 
-      sessionStorage.setItem('registerUser',JSON.stringify(this.user));
-      Swal.close();
-      this.router.navigate(['/register'])
-    }else{
-      console.log(response)
-      //Eğer kayıt db de varsa token tutulacak...
-    }
-    },
-    (err) => {
-      Swal.fire('Oops...', 'Web Service Hatası!', 'error')
-    })
-      );  }
-  signInWithFacebook(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((x: any) => 
-    this.router.navigate(['/user'])
-    );
-  }
+//       sessionStorage.setItem('registerUser',JSON.stringify(this.user));
+//       Swal.close();
+//       this.router.navigate(['/register'])
+//     }else{
+//       console.log(response)
+//       //Eğer kayıt db de varsa token tutulacak...
+//     }
+//     },
+//     (err) => {
+//       Swal.fire('Oops...', 'Web Service Hatası!', 'error')
+//     })
+//       );  }
+   signInWithFacebook(): void {}
+//     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((x: any) => 
+//     this.router.navigate(['/user'])
+//     );
+//   }
   signOut(): void {
     this.authService.signOut();
   }
@@ -76,10 +76,19 @@ Swal.showLoading()
   }
   login() {
     if (this.loginForm.valid) {
-        this.loginUser.email = this.loginForm.controls["email"].value;
-        this.loginUser.password = this.loginForm.controls["password"].value;
-        this.authWebService.loginService(this.loginUser).subscribe((response:any)=>{
+      Swal.fire("Giriş Yapılıyor");
+      Swal.showLoading();
+        this.loginModel.email = this.loginForm.controls["email"].value;
+        this.loginModel.password = this.loginForm.controls["password"].value;
+        this.authWebService.login(this.loginModel).subscribe((response:any)=>{
+          Swal.close();
           console.log(response);
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('refreshToken',response.refreshToken);
+          this.toastr.success("Giriş Başarıyla Yapıldı");
+          ("Giriş Başarılı");
+          this.router.navigate(['/user']);
+
         })
       //this.router.navigate(['/user']);
 

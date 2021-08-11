@@ -58,9 +58,9 @@ export class RegisterComponent implements OnInit {
       this.registerUser.providerName = this.user.provider;
       this.registerUser.password = this.registerForm.controls['password'].value;
 
-      this.apiAuthService.registerSocialUser(this.registerUser).subscribe((response) => {
-        console.log(response);
-      })
+      // this.apiAuthService.registerSocialUser(this.registerUser).subscribe((response) => {
+      //   console.log(response);
+      // })
     }
 
 
