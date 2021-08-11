@@ -1,5 +1,8 @@
-# AngularSocialLoginExample
+# Angular Social Login Front-End Project
 
+
+![Angular & .Net Core JWT & Social Login App](https://github.com/ouzdev/WebAPISocialLogin/blob/master/WebAPISocialLogin/wwwroot/assets/images/readme-image.png?raw=true)
+<hr>
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
 
 ## Development server
