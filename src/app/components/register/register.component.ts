@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
+import { ToastrService } from 'ngx-toastr';
 import { RegisterUser } from 'src/app/models/registerUser';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
@@ -14,7 +15,7 @@ import Swal from 'sweetalert2';
 export class RegisterComponent implements OnInit {
   registerUser = new RegisterUser();
   user: SocialUser;
-  constructor(private authService: SocialAuthService, private formBuilder: FormBuilder, private router: Router, private apiAuthService: AuthService) {
+  constructor(private authService: SocialAuthService, private formBuilder: FormBuilder, private router: Router, private apiAuthService: AuthService, private toastr:ToastrService) {
   }
 
   registerForm = this.formBuilder.group({
@@ -38,6 +39,26 @@ export class RegisterComponent implements OnInit {
     );
   }
   register() {
+
+      if (this.registerForm.controls["password"].value != this.registerForm.controls["confirmPassword"].value) {
+      Swal.fire("Hata","Şifreler Uyuşmuyor...","error")
+      this.registerForm.controls["password"].setValue("");
+      this.registerForm.controls["confirmPassword"].setValue("");
+    } else {    
+      this.registerUser.email = this.registerForm.controls["email"].value;
+      this.registerUser.firstName = this.registerForm.controls["name"].value;
+      this.registerUser.lastName = this.registerForm.controls["surname"].value;
+      this.registerUser.providerId = this.user.id;
+      this.registerUser.providerName = this.user.provider;
+      this.registerUser.password = this.registerForm.controls['password'].value;
+
+      this.apiAuthService.register(this.registerUser).subscribe((response)=>{
+          this.toastr.success("Başarıyla Kayıt Olundu");
+      },
+      (err)=>{
+        Swal.fire(err.error.message,undefined,"info");
+      })
+    }
 
   }
   login() {
@@ -68,7 +89,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('registerUser') || '{}');
-
     if (this.user?.response != undefined) {
       this.registerForm.patchValue({ name: this.user?.firstName })
       this.registerForm.controls['name'].disable();
@@ -77,8 +97,6 @@ export class RegisterComponent implements OnInit {
       this.registerForm.patchValue({ email: this.user?.email })
       this.registerForm.controls['email'].disable();
     }
-
-
   };
 
 
