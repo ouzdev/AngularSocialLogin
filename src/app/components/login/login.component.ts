@@ -89,9 +89,10 @@ idToken:AuthenticateRequest |null;
           ("Giriş Başarılı");
           this.router.navigate(['/user']);
 
+        },
+        (err)=>{
+          Swal.fire(err.error,undefined,"error")
         })
-      //this.router.navigate(['/user']);
-
     }
   }
   register(){
