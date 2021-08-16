@@ -1,15 +1,11 @@
-import { state } from '@angular/animations';
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 import { AuthenticateRequest } from 'src/app/models/authenticateRequest';
-import { LoginModel} from 'src/app/models/loginModel';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserExistsService } from 'src/app/services/user-exists.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,86 +14,74 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.css']
 })
 
-
 export class LoginComponent implements OnInit {
   user: SocialUser | null;
   loading = false;
-  loginModel= new LoginModel();
 
-idToken:AuthenticateRequest |null;
-  constructor(private authService: SocialAuthService, private formBuilder: FormBuilder, private router: Router, private authWebService:AuthService,private toastr:ToastrService) {
+  idToken: AuthenticateRequest | null;
+  constructor(
+    private authSocialService: SocialAuthService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private toastr: ToastrService
+    ) {
     this.user = null;
     this.idToken = null;
-    this.authService.authState.subscribe((user: SocialUser) => {
-      localStorage.setItem('user',JSON.stringify(user));
-      ​this.user = user;
-    });
   }
 
   loginForm = this.formBuilder.group({
-    email: ['', Validators.required],
+    email: ['', [Validators.email,Validators.required]],
     password: ['', Validators.required]
   });
 
-//   //Google İle Giriş Metodu
-   signInWithGoogle(): void {}
+  //   //Google İle Giriş Metodu
+  signInWithGoogle(): void {
+    Swal.fire('Giriş Yapılıyor...')
+    Swal.showLoading()
+    this.authSocialService.signIn(GoogleLoginProvider.PROVIDER_ID).then((data: AuthenticateRequest) => {
+        this.authService.registerSocial(data).subscribe((response)=>{
+          Swal.close();
+            if(response.success){
+              localStorage.setItem('token', response.data.token);
+              localStorage.setItem('refreshToken', response.data.refreshToken);
+              this.toastr.success("Giriş Başarıyla Yapıldı");
+              this.router.navigate(['/user']);
+            }else{
+              this.router.navigate(['/register']);
 
-//     Swal.fire('Giriş Yapılıyor...')
-// Swal.showLoading()
-//     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: AuthenticateRequest) => 
+            }
+        })
+    });
+  }
 
-//     this.authWebService.loginWebService(x).subscribe((response)=>{
-
-//     if(!response.success){
-//       console.log(response)
-
-//       sessionStorage.setItem('registerUser',JSON.stringify(this.user));
-//       Swal.close();
-//       this.router.navigate(['/register'])
-//     }else{
-//       console.log(response)
-//       //Eğer kayıt db de varsa token tutulacak...
-//     }
-//     },
-//     (err) => {
-//       Swal.fire('Oops...', 'Web Service Hatası!', 'error')
-//     })
-//       );  }
-   signInWithFacebook(): void {}
-//     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((x: any) => 
-//     this.router.navigate(['/user'])
-//     );
-//   }
   signOut(): void {
-    this.authService.signOut();
+    this.authSocialService.signOut();
   }
   ngOnInit(): void {
     sessionStorage.clear();
   }
+
   login() {
     if (this.loginForm.valid) {
       Swal.fire("Giriş Yapılıyor");
       Swal.showLoading();
-        this.loginModel.email = this.loginForm.controls["email"].value;
-        this.loginModel.password = this.loginForm.controls["password"].value;
-        this.authWebService.login(this.loginModel).subscribe((response:any)=>{
-          Swal.close();
-          console.log(response);
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('refreshToken',response.refreshToken);
-          this.toastr.success("Giriş Başarıyla Yapıldı");
-          ("Giriş Başarılı");
-          this.router.navigate(['/user']);
+      let formData = Object.assign({}, this.loginForm.value);
+      this.authService.login(formData).subscribe((response: any) => {
+        Swal.close();
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('refreshToken', response.refreshToken);
+        this.toastr.success("Giriş Başarıyla Yapıldı");
+        this.router.navigate(['/user']);
 
-        },
-        (err)=>{
-          Swal.fire(err.error,undefined,"error")
+      },
+        (err) => {
+          Swal.fire(err.error, undefined, "error")
         })
     }
   }
-  register(){
+  register() {
     this.router.navigate(['/register'])
   }
-
 }
 

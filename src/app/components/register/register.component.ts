@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { ToastrService } from 'ngx-toastr';
-import { RegisterUser } from 'src/app/models/registerUser';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
+import { ConfirmedValidator } from 'src/app/services/match-password.validator';
+import { UserExistsService } from 'src/app/services/user-exists.service';
 
 @Component({
   selector: 'app-register',
@@ -13,18 +14,30 @@ import Swal from 'sweetalert2';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  registerUser = new RegisterUser();
   user: SocialUser;
-  constructor(private authService: SocialAuthService, private formBuilder: FormBuilder, private router: Router, private apiAuthService: AuthService, private toastr:ToastrService) {
+  constructor(private authService: SocialAuthService, 
+    private formBuilder: FormBuilder, 
+    private router: Router, 
+    private apiAuthService: AuthService, 
+    private toastr: ToastrService,
+    private userexistsService:UserExistsService
+    ) {
   }
 
   registerForm = this.formBuilder.group({
-    name: ['', Validators.required],
-    surname: ['', Validators.required],
-    email: ['', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', [Validators.required],[this.userexistsService.usernameValidator()]],
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]]
+  }, {
+    validator: ConfirmedValidator('password', 'confirmPassword')
   });
+
+  //Getters
+  get f() {
+    return this.registerForm.controls;
+  }
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) =>
@@ -40,49 +53,24 @@ export class RegisterComponent implements OnInit {
   }
   register() {
 
-      if (this.registerForm.controls["password"].value != this.registerForm.controls["confirmPassword"].value) {
-      Swal.fire("Hata","Şifreler Uyuşmuyor...","error")
-      this.registerForm.controls["password"].setValue("");
-      this.registerForm.controls["confirmPassword"].setValue("");
-    } else {    
-      this.registerUser.email = this.registerForm.controls["email"].value;
-      this.registerUser.firstName = this.registerForm.controls["name"].value;
-      this.registerUser.lastName = this.registerForm.controls["surname"].value;
-      this.registerUser.providerId = this.user.id;
-      this.registerUser.providerName = this.user.provider;
-      this.registerUser.password = this.registerForm.controls['password'].value;
-
-      this.apiAuthService.register(this.registerUser).subscribe((response)=>{
+      if(this.registerForm.valid){
+        let formData = Object.assign({}, this.registerForm.value);
+        this.apiAuthService.register(formData).subscribe((response) => {
           this.toastr.success("Başarıyla Kayıt Olundu");
-      },
-      (err)=>{
-        Swal.fire(err.error.message,undefined,"info");
-      })
-    }
+          this.router.navigate([''])
+
+        },
+          (err) => {
+            Swal.fire(err.error.message, undefined, "info");
+          })
+      }
+  
 
   }
   login() {
     this.router.navigate(['/'])
   }
   registerSocial() {
-    if (this.registerForm.controls["password"].value != this.registerForm.controls["confirmPassword"].value) {
-      Swal.fire("Hata","Şifreler Uyuşmuyor...","error")
-      this.registerForm.controls["password"].setValue("");
-      this.registerForm.controls["confirmPassword"].setValue("");
-    } else {
-      console.log(this.registerUser)
-    
-      this.registerUser.email = this.user.email;
-      this.registerUser.firstName = this.user.firstName;
-      this.registerUser.lastName = this.user.lastName;
-      this.registerUser.providerId = this.user.id;
-      this.registerUser.providerName = this.user.provider;
-      this.registerUser.password = this.registerForm.controls['password'].value;
-
-      // this.apiAuthService.registerSocialUser(this.registerUser).subscribe((response) => {
-      //   console.log(response);
-      // })
-    }
 
 
   }

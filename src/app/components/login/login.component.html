@@ -5,13 +5,14 @@
           <span class="login100-form-title p-b-43">
             Giriş Yap
           </span>
-  
-  
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>E-Posta Adresi</mat-label>
             <input  type="email" formControlName="email" matInput>
             <mat-hint style="color: red;" *ngIf="loginForm.get('email')?.touched &&  loginForm.get('email')?.errors?.required">
               E-Mail Adresi Gereklidir
+            </mat-hint>
+            <mat-hint style="color: red;" *ngIf="loginForm.get('email')?.errors?.email">
+              Lütfen Geçerli Bir E-Mail Giriniz
             </mat-hint>
           </mat-form-field>
   
@@ -60,7 +61,7 @@
             <a (click)="signInWithGoogle()" class="login100-form-social-item flex-c-m bg3 m-r-5">
               <i class="fab fa-google" aria-hidden="true"></i> 
             </a>
-            <a (click)="signInWithFacebook()" class="login100-form-social-item flex-c-m bg1 m-r-5">
+            <a  class="login100-form-social-item flex-c-m bg1 m-r-5">
               <i class="fab fa-facebook" aria-hidden="true"></i> 
             </a>
   

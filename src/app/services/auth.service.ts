@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ResponseModel } from '../models/responseModel';
+import { TokenResponseModel } from '../models/tokenResponseModel';
 import { UserResponseModel } from '../models/userResponseModel';
 
 @Injectable({
@@ -11,12 +13,15 @@ export class AuthService {
   constructor(private httpClient:HttpClient) {
   }
     register(data:any):Observable<UserResponseModel>{
-      console.log(data);
       return this.httpClient.post<UserResponseModel>(this.apiUrl+"/register",data);
     }
 
     login(data:any):Observable<UserResponseModel>{
       return this.httpClient.post<UserResponseModel>(this.apiUrl+"/login",data);
+    }
+
+    registerSocial(data:any):Observable<TokenResponseModel>{
+      return this.httpClient.post<TokenResponseModel>(this.apiUrl+"/provider-signin",data);
     }
 
     isAuthenticated() {
@@ -26,7 +31,11 @@ export class AuthService {
         return false;
       }
     }
-    
+
+    checkIfUserMailExists(data:any): Observable<ResponseModel> {
+      return this.httpClient.get<ResponseModel>(this.apiUrl+"/check-user?data="+data);
+    }
+
     logout() {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');

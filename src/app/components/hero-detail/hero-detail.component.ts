@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeroDetailComponent implements OnInit {
   user: SocialUser | null;
-  constructor(private authService:SocialAuthService,private router:Router,private webApiAuthService:AuthService,private userService:UserService) { 
+  constructor(private authService:SocialAuthService,private router:Router,private webApiAuthService:AuthService) { 
     this.user=null;
     var result =localStorage.getItem('user');
    this.user = JSON.parse(result || '{}');
@@ -25,9 +25,7 @@ export class HeroDetailComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.userService.getAll().subscribe(response => {
-      console.log(response.data);
-    })
+   
   }
 
 }
