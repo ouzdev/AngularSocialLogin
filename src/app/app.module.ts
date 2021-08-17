@@ -24,6 +24,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor.service';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor.service';
     MatToolbarModule,
     MatIconModule,
     MatGridListModule,
+    MatTooltipModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
     }),

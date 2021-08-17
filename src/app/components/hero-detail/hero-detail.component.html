@@ -2,56 +2,165 @@
     <mat-toolbar-row>
         <span>Angular JWT & Social Login</span>
         <span class="example-spacer"></span>
-        <button mat-mini-fab color="warn" (click)="signOut()" color="warn" aria-label="Example icon button with a home icon">
+        <button mat-mini-fab color="warn" (click)="signOut()" color="warn" matTooltip="Çıkış Yap" matTooltipPosition="below"
+            aria-label="Example icon button with a home icon">
             <mat-icon>power_settings_new</mat-icon>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="container rounded bg-white  mb-5">
-    <div class="row">
-        <form [formGroup]="profileForm">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
-        </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Kişisel Bilgiler</h4>
+<div class="container-fluid">
+    <form [formGroup]="profileForm">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+
+                    <img class="rounded-circle mt-5" width="150px"
+                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <button mat-mini-fab matTooltip="Profil Resmini Değiştir" matTooltipPosition="below" color="warn" aria-label="Example icon button with a filter list icon">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <span class="font-weight-bold mt-3">Oğuzcan Genç</span>
+                    <span class="text-black-50">oguzcangencc@hotmail.com</span>
+
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <label class="labels">Ad</label><input type="text" class="form-control" placeholder="first name" value="">
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Hesap
+                            Bilgileri</span>
+                            <div>
+                                <button style="margin-right: 10px;" matTooltip="Şifre İşlemleri" matTooltipPosition="before" mat-fab color="primary"
+                                aria-label="Example icon button with a delete icon">
+                                <mat-icon>lock</mat-icon>
+                            </button>
+                            <button matTooltip="Değişikleri Kaydet"  matTooltipPosition="before" mat-fab color="warn"
+                            aria-label="Example icon button with a delete icon">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                            </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="labels">Soyad</label><input type="text" class="form-control" value="" placeholder="surname">
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Adınız</mat-label>
+                                <input type="text" formControlName="firstName" matInput>
+                                <mat-icon matSuffix>account_circle</mat-icon>
+                                <mat-hint style="color: red;"
+                                    *ngIf="profileForm.get('firstName')?.touched &&  profileForm.get('firstName')?.errors?.required">
+                                    Ad Gereklidir.
+                                </mat-hint>
+
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Soyadınız</mat-label>
+                                <input type="text" formControlName="lastName" matInput>
+                                <mat-icon matSuffix>account_circle</mat-icon>
+                                <mat-hint style="color: red;"
+                                    *ngIf="profileForm.get('lastName')?.touched &&  profileForm.get('lastName')?.errors?.required">
+                                    Soyadı Gereklidir.
+                                </mat-hint>
+
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>E-Mail Adresiniz</mat-label>
+                                <input type="email" formControlName="email" matInput>
+                                <mat-icon matSuffix>email</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Telefon Numarası (GSM)</mat-label>
+                                <input type="tel" formControlName="tel" matInput>
+                                <mat-icon matSuffix>call</mat-icon>
+
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>İl</mat-label>
+                                <input type="text" formControlName="city" matInput>
+                                <mat-icon matSuffix>location_city</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>İlçe</mat-label>
+                                <input type="text" formControlName="county" matInput>
+                                <mat-icon matSuffix>location_city</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Adres</mat-label>
+                                <textarea matInput formControlName="address"></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Eğitim Bilgileriniz</mat-label>
+                                <textarea rows="3" matInput formControlName="educationInfo"></textarea>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
-                    <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
-                    <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                    <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                    <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                    <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                    <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value=""></div>
-                    <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Yetenek
+                            Ayarları</span>
+                        <button matTooltip="Yetenek Alanı Ekle" matTooltipPosition="before" mat-fab color="primary"
+                            (click)="addSkill()" aria-label="Example icon button with a delete icon">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                    <hr>
+                    <ng-container *ngFor="let data of skills.controls; index as i;">
+                        <div class="col-md-12 alert alert-success " formArrayName="skills">
+
+                            <ng-container [formGroupName]="i">
+
+                                <button style=" transform: scale(0.7) !important;" mat-mini-fab color="warn"
+                                    class="float-end mb-2" matTooltip="Kaldır" matTooltipPosition="before" (click)="deleteSkill(i)"
+                                    aria-label="Example icon button with a filter list icon">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Yetenek</mat-label>
+                                    <input type="text" formControlName="skillName" matInput>
+                                    <mat-icon matSuffix>auto_fix_high</mat-icon>
+                                    <mat-hint style="color: red;"
+                                        *ngIf="profileForm.get('skillName')?.touched &&  profileForm.get('skillName')?.errors?.required">
+                                        E-Mail Adresi Gereklidir
+                                    </mat-hint>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Detaylar</mat-label>
+                                    <input type="text" formControlName="skillDescription" matInput>
+                                    <mat-icon matSuffix>description</mat-icon>
+                                    <mat-hint style="color: red;"
+                                        *ngIf="profileForm.get('skillDescription')?.touched &&  profileForm.get('skillDescription')?.errors?.required">
+                                        E-Mail Adresi Gereklidir
+                                    </mat-hint>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+
+                    </ng-container>
+
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
-                </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Profil Bilgilerini Kaydet</button></div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Yetenek Ayarları</span>
-                <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Yetenek Ekle</span></div><br>
-                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
-            </div>
-        </div>
+        
     </form>
-    </div>
 </div>

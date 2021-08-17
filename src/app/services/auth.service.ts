@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../models/responseModel';
+import { SingleResponseModel } from '../models/singleResponseModel';
 import { TokenResponseModel } from '../models/tokenResponseModel';
+import { User } from '../models/user';
 import { UserResponseModel } from '../models/userResponseModel';
 
 @Injectable({
@@ -16,8 +18,8 @@ export class AuthService {
       return this.httpClient.post<UserResponseModel>(this.apiUrl+"/register",data);
     }
 
-    login(data:any):Observable<UserResponseModel>{
-      return this.httpClient.post<UserResponseModel>(this.apiUrl+"/login",data);
+    login(data:any):Observable<SingleResponseModel<User>>{
+      return this.httpClient.post<SingleResponseModel<User>>(this.apiUrl+"/login",data);
     }
 
     registerSocial(data:any):Observable<TokenResponseModel>{

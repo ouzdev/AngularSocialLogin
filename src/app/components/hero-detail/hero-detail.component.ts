@@ -1,31 +1,61 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
   styleUrls: ['./hero-detail.component.css']
 })
+
 export class HeroDetailComponent implements OnInit {
-  user: SocialUser | null;
-  constructor(private authService:SocialAuthService,private router:Router,private webApiAuthService:AuthService) { 
-    this.user=null;
+  profileForm: FormGroup;
+
+  constructor(private router:Router, private formBuilder:FormBuilder) { 
     var result =localStorage.getItem('user');
-   this.user = JSON.parse(result || '{}');
-
   }
-  signOut(): void {
-    localStorage.removeItem('user');
-    this.authService.signOut();
-    this.webApiAuthService.logout();
-    this.router.navigate([''])
 
+  //Getters
+  get skills(): FormArray {
+    return this.profileForm.get('skills') as FormArray;
   }
   ngOnInit(): void {
    
+ 
+  this.profileForm = this.formBuilder.group({
+    firstName:[''],
+    lastName:[''],
+    email:[''],
+    tel:[''],
+    city:[''],
+    county:[''],
+    address:[''],
+    educationInfo:[''],
+    skills:this.formBuilder.array([])
+  });
+}
+  addSkill(){
+    this.skills.push(
+      this.formBuilder.group({
+        skillName:[''],
+        skillDescription:['']
+      })
+    )
+  }
+  saveProfile(){
+    console.log(this.profileForm.value);
+
+  }
+  deleteSkill(index:number){
+      this.skills.removeAt(index);
+  }
+
+
+  signOut(): void {
+    localStorage.removeItem('user');
+    this.router.navigate([''])
+
   }
 
 }

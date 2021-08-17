@@ -15,10 +15,6 @@ import Swal from 'sweetalert2';
 })
 
 export class LoginComponent implements OnInit {
-  user: SocialUser | null;
-  loading = false;
-
-  idToken: AuthenticateRequest | null;
   constructor(
     private authSocialService: SocialAuthService,
     private formBuilder: FormBuilder,
@@ -26,8 +22,6 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private toastr: ToastrService
     ) {
-    this.user = null;
-    this.idToken = null;
   }
 
   loginForm = this.formBuilder.group({
@@ -35,7 +29,6 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   });
 
-  //   //Google İle Giriş Metodu
   signInWithGoogle(): void {
     Swal.fire('Giriş Yapılıyor...')
     Swal.showLoading()
@@ -58,14 +51,6 @@ export class LoginComponent implements OnInit {
         })
     });
   }
-
-  signOut(): void {
-    this.authSocialService.signOut();
-  }
-  ngOnInit(): void {
-    sessionStorage.clear();
-  }
-
   login() {
     if (this.loginForm.valid) {
       Swal.fire("Giriş Yapılıyor");
@@ -81,11 +66,14 @@ export class LoginComponent implements OnInit {
       },
         (err) => {
           Swal.close();
-          this.toastr.error("Web Service Error");
+          this.toastr.error(err.error);
         })
     }
   }
   register() {
     this.router.navigate(['/register'])
+  } 
+  ngOnInit(): void {
+    sessionStorage.clear();
   }
 }
