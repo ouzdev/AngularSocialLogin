@@ -15,10 +15,10 @@ import { UserExistsService } from 'src/app/services/user-exists.service';
 })
 export class RegisterComponent implements OnInit {
   user: SocialUser;
-  constructor(private authService: SocialAuthService, 
-    private formBuilder: FormBuilder, 
-    private router: Router, 
-    private apiAuthService: AuthService, 
+  constructor(private authService: SocialAuthService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private apiAuthService: AuthService,
     private toastr: ToastrService,
     private userexistsService:UserExistsService
     ) {
@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
   registerForm = this.formBuilder.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
-    email: ['', [Validators.required],[this.userexistsService.usernameValidator()]],
+    email: ['', [Validators.required]],
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required]]
   }, {
@@ -54,17 +54,22 @@ export class RegisterComponent implements OnInit {
   register() {
 
       if(this.registerForm.valid){
+        Swal.fire("Kayıt Yapılıyor");
+        Swal.showLoading();
         let formData = Object.assign({}, this.registerForm.value);
         this.apiAuthService.register(formData).subscribe((response) => {
+          Swal.close();
           this.toastr.success("Başarıyla Kayıt Olundu");
           this.router.navigate([''])
 
         },
           (err) => {
-            Swal.fire(err.error.message, undefined, "info");
+            Swal.close();
+
+            this.toastr.error("Web Service Error");
           })
       }
-  
+
 
   }
   login() {

@@ -51,6 +51,10 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/register']);
 
             }
+        },
+        (err) => {
+          Swal.close();
+          this.toastr.error("Web Service Error");
         })
     });
   }
@@ -76,7 +80,8 @@ export class LoginComponent implements OnInit {
 
       },
         (err) => {
-          Swal.fire(err.error, undefined, "error")
+          Swal.close();
+          this.toastr.error("Web Service Error");
         })
     }
   }
@@ -84,4 +89,3 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/register'])
   }
 }
-
