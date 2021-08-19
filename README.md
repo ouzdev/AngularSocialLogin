@@ -4,7 +4,7 @@
 ![Angular & .Net Core JWT & Social Login App](https://github.com/ouzdev/WebAPISocialLogin/blob/master/WebAPISocialLogin/wwwroot/assets/images/readme-image.png?raw=true)
 <hr>
 ```
-📦 Angular Social Login Front-End Project
+📦 Angular Social Login Front-End Project Tree Structure
 ├─ src
 │  ├─ app
 │  │  ├─ app-routing.module.ts
@@ -14,7 +14,7 @@
 │  │  ├─ app.component.ts
 │  │  ├─ app.module.ts
 │  │  ├─ auth.service.spec.ts
-components
+│  │  ├─ components
 │  │  │  ├─ hero-detail
 │  │  │  │  ├─ hero-detail.component.css
 │  │  │  │  ├─ hero-detail.component.html
@@ -33,11 +33,11 @@ components
 │  │  │  └─ auth-interceptor.service.ts
 │  │  ├─ models
 │  │  │  ├─ authenticateRequest.ts
-listResponseModel.ts
+│  │  │  ├─ listResponseModel.ts
 │  │  │  ├─ registerUser.ts
 │  │  │  ├─ responseModel.ts
 │  │  │  ├─ singleResponseModel.ts
-tokenModel.ts
+│  │  │  ├─ tokenModel.ts
 │  │  │  ├─ tokenResponseModel.ts
 │  │  │  ├─ user.ts
 │  │  │  └─ userResponseModel.ts
@@ -56,9 +56,9 @@ tokenModel.ts
 │  │  │  │  │  ├─ Linearicons-Free.ttf
 │  │  │  │  │  ├─ Linearicons-Free.woff
 │  │  │  │  │  └─ Linearicons-Free.woff2
-icon-font.min.css
-font-awesome-4.7.0
-HELP-US-OUT.txt
+│  │  │  │  └─ icon-font.min.css
+│  │  │  ├─ font-awesome-4.7.0
+│  │  │  │  ├─ HELP-US-OUT.txt
 │  │  │  │  ├─ css
 │  │  │  │  │  ├─ font-awesome.css
 │  │  │  │  │  └─ font-awesome.min.css
