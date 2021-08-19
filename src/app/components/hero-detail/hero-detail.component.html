@@ -20,8 +20,8 @@
                     <button mat-mini-fab matTooltip="Profil Resmini Değiştir" matTooltipPosition="below" color="warn" aria-label="Example icon button with a filter list icon">
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <span class="font-weight-bold mt-3">Oğuzcan Genç</span>
-                    <span class="text-black-50">oguzcangencc@hotmail.com</span>
+                    <span class="font-weight-bold mt-3">{{this.user.firstName}} {{this.user.lastName}}</span>
+                    <span class="text-black-50">{{this.user.email}}</span>
 
                 </div>
             </div>
@@ -163,4 +163,6 @@
         </div>
         
     </form>
+    {{profileForm.value | json}}
+    {{profileForm.status}}
 </div>

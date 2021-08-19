@@ -3,10 +3,10 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import Swal from 'sweetalert2';
-import { ConfirmedValidator } from 'src/app/services/match-password.validator';
-import { UserExistsService } from 'src/app/services/user-exists.service';
+import { ConfirmedValidator } from 'src/app/utilities/match-password.validator';
+import { UserExistsService } from 'src/app/services/user/user-exists.service';
 
 @Component({
   selector: 'app-register',

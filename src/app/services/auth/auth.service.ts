@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseModel } from '../models/responseModel';
-import { SingleResponseModel } from '../models/singleResponseModel';
-import { TokenResponseModel } from '../models/tokenResponseModel';
-import { User } from '../models/user';
-import { UserResponseModel } from '../models/userResponseModel';
+import { ResponseModel } from '../../models/responseModel';
+import { SingleResponseModel } from '../../models/singleResponseModel';
+import { TokenResponseModel } from '../../models/auth/tokenResponseModel';
+import { User } from '../../models/user/user';
+import { UserResponseModel } from '../../models/user/userResponseModel';
 
 @Injectable({
   providedIn: 'root'

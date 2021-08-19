@@ -3,9 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { ToastrService } from 'ngx-toastr';
-import { AuthenticateRequest } from 'src/app/models/authenticateRequest';
-import { AuthService } from 'src/app/services/auth.service';
-import { UserExistsService } from 'src/app/services/user-exists.service';
+import { AuthenticateRequest } from 'src/app/models/auth/authenticateRequest';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { UserExistsService } from 'src/app/services/user/user-exists.service';
 import Swal from 'sweetalert2';
 
 @Component({
