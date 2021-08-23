@@ -7,6 +7,7 @@ export interface User{
     tel:string;
     city:string;
     county:string;
+    profileAvatarUrl:string;
     address:string;
     educationInfo:string;
 }

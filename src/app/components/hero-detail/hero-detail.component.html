@@ -16,12 +16,14 @@
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
 
                     <img class="rounded-circle mt-5" width="150px"
-                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                    <button mat-mini-fab matTooltip="Profil Resmini Değiştir" matTooltipPosition="below" color="warn" aria-label="Example icon button with a filter list icon">
-                        <mat-icon>edit</mat-icon>
+                    src="{{dataimage}}">
+                    <br>
+                    <button mat-mini-fab color="primary" matTooltip="Profil Resmini Değiştir" (click)="fileInput.click()" aria-label="Example icon button with a filter list icon"><mat-icon>edit</mat-icon>
                     </button>
-                    <span class="font-weight-bold mt-3">{{this.user.firstName}} {{this.user.lastName}}</span>
-                    <span class="text-black-50">{{this.user.email}}</span>
+                    <input type="file" style="display:none"  #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile" accept="image/*" />
+                    
+                    <span class="font-weight-bold mt-3">{{this.profileForm.controls['firstName'].value}} {{this.profileForm.controls['lastName'].value}}</span>
+                    <span class="text-black-50">{{this.profileForm.controls['email'].value}}</span>
 
                 </div>
             </div>
@@ -35,7 +37,7 @@
                                 aria-label="Example icon button with a delete icon">
                                 <mat-icon>lock</mat-icon>
                             </button>
-                            <button matTooltip="Değişikleri Kaydet"  matTooltipPosition="before" mat-fab color="warn"
+                            <button matTooltip="Değişikleri Kaydet" (click)="saveProfile()" matTooltipPosition="before" mat-fab color="warn"
                             aria-label="Example icon button with a delete icon">
                             <mat-icon>save</mat-icon>
                         </button>

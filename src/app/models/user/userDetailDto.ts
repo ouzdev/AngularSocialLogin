@@ -1,6 +1,7 @@
 import { Skill } from "./skill";
 
 export interface UserDetailDto{
+    id:number;
     firstName: string;
     lastName: string;
     email: string;
@@ -9,5 +10,6 @@ export interface UserDetailDto{
     county: string;
     address: string;
     educationInfo: string;
+    profileAvatar:string;
     skills: Skill[];
 }
