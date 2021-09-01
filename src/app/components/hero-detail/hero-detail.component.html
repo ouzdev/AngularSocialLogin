@@ -131,12 +131,17 @@
                         <div class="col-md-12 alert alert-success " formArrayName="skills">
 
                             <ng-container [formGroupName]="i">
-
+                                <button style=" transform: scale(0.7) !important;" mat-mini-fab color="accent"
+                                class="float-end mb-2" matTooltip="Kaydet" matTooltipPosition="before" (click)="saveSkill(i)"
+                                aria-label="Example icon button with a filter list icon">
+                                <mat-icon>done</mat-icon>
+                            </button>
                                 <button style=" transform: scale(0.7) !important;" mat-mini-fab color="warn"
                                     class="float-end mb-2" matTooltip="Kaldır" matTooltipPosition="before" (click)="deleteSkill(i)"
                                     aria-label="Example icon button with a filter list icon">
                                     <mat-icon>close</mat-icon>
                                 </button>
+                                <input type="hidden" formControlName="skillId" />
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Yetenek</mat-label>
                                     <input type="text" formControlName="skillName" matInput>
@@ -165,6 +170,5 @@
         </div>
         
     </form>
-    {{profileForm.value | json}}
-    {{profileForm.status}}
+   
 </div>

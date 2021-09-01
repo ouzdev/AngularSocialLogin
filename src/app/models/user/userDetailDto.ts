@@ -1,15 +1,7 @@
-import { Skill } from "./skill";
+import { Skill } from "../skill/skill";
+import { User } from "./user";
 
 export interface UserDetailDto{
-    id:number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    tel?: any;
-    city: string;
-    county: string;
-    address: string;
-    educationInfo: string;
-    profileAvatar:string;
-    skills: Skill[];
+    user:User;
+    skill: Skill[];
 }
